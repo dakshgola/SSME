@@ -21,7 +21,7 @@ The redesigned site features a clean and intuitive user interface, with clear na
 
 ## Deployment
 
-A live demo of this project is hosted on Vercel. You can view the live site at [ssme-sigma.vercel.app](https://ssme-sigma.vercel.app/).
+A live demo of this project is hosted on Vercel. You can view the live site at [ssme-khaki.vercel.app](https://ssme-khaki.vercel.app/).
 
 ## Disclaimer
 
