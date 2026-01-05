@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import logo from '../assets/logo.png';
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -31,7 +32,7 @@ const Navbar = () => {
         <div className="flex justify-between items-center">
           <Link to="/" className="flex items-center">
             <img 
-              src="/src/assets/logo.png" 
+              src={logo} 
               alt="SSME BizPro Logo" 
               className="h-12 md:h-16 transition-all duration-300 hover:scale-105"
             />
