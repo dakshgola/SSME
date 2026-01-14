@@ -27,7 +27,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-900 to-blue-800 overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-900 to-blue-800 overflow-hidden pt-36">
       <AnimatedBackground />
 
       <div className="container mx-auto px-4 z-10">

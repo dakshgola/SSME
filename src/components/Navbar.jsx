@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../assets/logo.png';
-import Button from './Button';
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -9,7 +8,7 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 10) {
+      if (window.scrollY > 20) {
         setScrolled(true);
       } else {
         setScrolled(false);
@@ -22,41 +21,67 @@ const Navbar = () => {
 
   const navLinks = [
     { name: 'Home', path: '/' },
-    { name: 'About', path: '/about' },
     { name: 'Services', path: '/services' },
+    { name: 'About', path: '/about' },
     { name: 'Contact', path: '/contact' },
   ];
 
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-gradient-to-r from-blue-700 to-blue-600 text-white shadow-md py-2' : 'bg-gradient-to-r from-blue-900 to-blue-800 text-white py-4'}`}>
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          <Link to="/" className="flex items-center space-x-3">
-            <img 
-              src={logo} 
-              alt="SSME BizPro Logo" 
-              loading="lazy"
-              decoding="async"
-              className="h-10 md:h-12 transition-all duration-300"
-            />
-            <div className={`hidden sm:block font-bold ${scrolled ? 'text-gray-900' : 'text-white'}`}>SSME BizPro</div>
+    <header className={`fixed top-0 left-0 right-0 w-full z-50 transition-all duration-300 ease-out ${
+      scrolled 
+        ? 'bg-white/95 backdrop-blur-xl shadow-lg border-b border-gray-100' 
+        : 'bg-white/90 backdrop-blur-lg'
+    }`}>
+      <nav className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className={`flex items-center justify-between transition-all duration-300 ${
+          scrolled ? 'h-16' : 'h-20'
+        }`}>
+          {/* Logo Section */}
+          <Link to="/" className="flex items-center space-x-3 flex-shrink-0 group">
+            <div className="relative">
+              <img 
+                src={logo} 
+                alt="SSME BizPro Logo" 
+                loading="lazy"
+                decoding="async"
+                className={`w-auto transition-all duration-300 ${
+                  scrolled ? 'h-10' : 'h-12'
+                }`}
+              />
+            </div>
+            <div className={`font-bold tracking-tight transition-all duration-300 ${
+              scrolled ? 'text-2xl' : 'text-3xl'
+            }`}>
+              <span className="bg-gradient-to-r from-blue-600 to-indigo-700 bg-clip-text text-transparent">
+                SSME
+              </span>
+              <span className="text-gray-800 ml-1">BizPro</span>
+            </div>
           </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-6">
             {navLinks.map((link) => (
               link.name === 'Contact' ? (
-                <Button key={link.name} to={link.path} variant={'primary'} className={scrolled ? '' : ''}>
-                  {link.name}
-                </Button>
+                <Link
+                  key={link.name}
+                  to={link.path}
+                  className={`relative bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold rounded-xl transition-all duration-300 shadow-md hover:shadow-xl hover:shadow-blue-500/30 hover:-translate-y-0.5 ${
+                    scrolled ? 'px-8 py-3 text-base' : 'px-9 py-3.5 text-base'
+                  }`}
+                >
+                  <span className="relative z-10">{link.name}</span>
+                </Link>
               ) : (
                 <Link
                   key={link.name}
                   to={link.path}
-                  className={`font-medium transition-colors duration-300 relative group ${scrolled ? 'text-white hover:text-blue-100' : 'text-white hover:text-yellow-300'}`}
+                  className={`font-semibold text-gray-700 hover:text-gray-900 transition-all duration-200 relative group ${
+                    scrolled ? 'text-lg px-5 py-2.5' : 'text-lg px-6 py-3'
+                  }`}
                 >
                   {link.name}
-                  <span className={`absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-300 transition-all duration-300 group-hover:w-full`} />
+                  <span className="absolute bottom-0 left-4 right-4 h-1 bg-gradient-to-r from-blue-500 to-indigo-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center rounded-full" />
                 </Link>
               )
             ))}
@@ -64,15 +89,18 @@ const Navbar = () => {
 
           {/* Mobile menu button */}
           <button
-            className={`md:hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 rounded text-white`}
+            className="md:hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 rounded-lg p-2.5 text-gray-600 hover:text-gray-900 hover:bg-gray-50 transition-all duration-200"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={mobileMenuOpen}
-            onKeyDown={(e) => {
-              if (e.key === 'Escape') setMobileMenuOpen(false);
-            }}
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg 
+              className="w-7 h-7 transition-transform duration-200" 
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24"
+              style={{ transform: mobileMenuOpen ? 'rotate(90deg)' : 'rotate(0)' }}
+            >
               {mobileMenuOpen ? (
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               ) : (
@@ -83,20 +111,34 @@ const Navbar = () => {
         </div>
 
         {/* Mobile Navigation */}
-        <div className={`md:hidden ${mobileMenuOpen ? 'block' : 'hidden'} mt-4 pb-4`}>
-          <div className={`flex flex-col space-y-3 p-4 rounded-lg shadow-lg ${scrolled ? 'bg-gradient-to-r from-blue-700 to-blue-600 text-white' : 'bg-gradient-to-r from-blue-900 to-blue-800 text-white'}`}>
-            {navLinks.map((link) => (
+        <div 
+          className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
+            mobileMenuOpen ? 'max-h-96 opacity-100 pb-4' : 'max-h-0 opacity-0'
+          }`}
+        >
+          <div className="flex flex-col space-y-3 bg-white/95 backdrop-blur-xl rounded-2xl shadow-xl p-5 border border-gray-200 mt-3">
+            {navLinks.map((link, index) => (
               link.name === 'Contact' ? (
-                <Button key={link.name} to={link.path} variant="primary" onClick={() => setMobileMenuOpen(false)}>
+                <Link
+                  key={link.name}
+                  to={link.path}
+                  className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 text-center shadow-md hover:shadow-lg hover:shadow-blue-500/30 text-lg"
+                  onClick={() => setMobileMenuOpen(false)}
+                  style={{ 
+                    animation: mobileMenuOpen ? `slideIn 0.3s ease-out ${index * 0.05}s both` : 'none'
+                  }}
+                >
                   {link.name}
-                </Button>
+                </Link>
               ) : (
                 <Link
                   key={link.name}
                   to={link.path}
-                  className="font-medium py-3 px-4 rounded transition-colors duration-200"
+                  className="font-semibold text-gray-700 hover:text-gray-900 hover:bg-gray-50 py-4 px-6 rounded-xl transition-all duration-200 text-lg border-b border-gray-100 last:border-b-0"
                   onClick={() => setMobileMenuOpen(false)}
-                  onKeyDown={(e) => { if (e.key === 'Enter') setMobileMenuOpen(false); }}
+                  style={{ 
+                    animation: mobileMenuOpen ? `slideIn 0.3s ease-out ${index * 0.05}s both` : 'none'
+                  }}
                 >
                   {link.name}
                 </Link>
@@ -104,8 +146,21 @@ const Navbar = () => {
             ))}
           </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+
+      <style jsx>{`
+        @keyframes slideIn {
+          from {
+            opacity: 0;
+            transform: translateY(-8px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
+    </header>
   );
 };
 
